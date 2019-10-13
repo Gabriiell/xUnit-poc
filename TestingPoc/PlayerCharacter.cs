@@ -19,6 +19,11 @@ namespace TestingPoc
             CreateStartingWeapons();
         }
 
+        public void Sleep()
+        {
+            Health += new Random().Next(1, 101);
+        }
+
         private string GenerateName()
         {
             var names = new[]
