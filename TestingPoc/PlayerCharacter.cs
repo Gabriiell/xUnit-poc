@@ -16,6 +16,7 @@ namespace TestingPoc
         {
             IsNoob = true;
             Name = GenerateName();
+            CreateStartingWeapons();
         }
 
         private string GenerateName()
@@ -30,6 +31,16 @@ namespace TestingPoc
             };
 
             return names[new Random().Next(0, names.Length)];
+        }
+
+        private void CreateStartingWeapons()
+        {
+            Weapons = new List<string>
+            {
+                "Short bow",
+                "Long bow",
+                "Short sword"
+            };
         }
     }
 }
