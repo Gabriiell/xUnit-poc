@@ -18,6 +18,11 @@ namespace TestingPoc
 
         public int Divide(int value, int by)
         {
+            if (value > 200)
+            {
+                throw new ArgumentOutOfRangeException("value should be less than 200");
+            }
+
             return value / by;
         }
     }
