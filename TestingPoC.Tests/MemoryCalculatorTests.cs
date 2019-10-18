@@ -5,41 +5,49 @@ using Xunit.Abstractions;
 
 namespace TestingPoC.Tests
 {
-    public class MemoryCalculatorTests : IDisposable
+    public class MemoryCalculatorFixture : IDisposable
+    {
+        public MemoryCalculator Sut { get; private set; } = new MemoryCalculator();
+
+        public void Dispose()
+        {
+            Sut.Dispose();
+        }
+    }
+
+    public class MemoryCalculatorTests : IClassFixture<MemoryCalculatorFixture>
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly MemoryCalculator _sut;
+        private readonly MemoryCalculatorFixture _fixture;
 
-        public MemoryCalculatorTests(ITestOutputHelper testOutputHelper)
+        public MemoryCalculatorTests(ITestOutputHelper testOutputHelper, MemoryCalculatorFixture fixture)
         {
             _testOutputHelper = testOutputHelper;
+            _fixture = fixture;
 
-            _testOutputHelper.WriteLine("Creating sut");
-            _sut = new MemoryCalculator();
+            _fixture.Sut.Clear();
         }
 
         [Fact]
         public void ShouldAdd()
         {
+            var sut = _fixture.Sut;
+
             _testOutputHelper.WriteLine("Executing should add");
-            _sut.Add(10);
-            _sut.Add(5);
-            Assert.Equal(15, _sut.CurrentValue);
+            sut.Add(10);
+            sut.Add(5);
+            Assert.Equal(15, sut.CurrentValue);
         }
 
         [Fact]
         public void ShouldDivide()
         {
-            _testOutputHelper.WriteLine("Executing should divide");
-            _sut.Add(10);
-            _sut.Divide(2);
-            Assert.Equal(5, _sut.CurrentValue);
-        }
+            var sut = _fixture.Sut;
 
-        public void Dispose()
-        {
-            _testOutputHelper.WriteLine("Disposing sut");
-            _sut.Dispose();
+            _testOutputHelper.WriteLine("Executing should divide");
+            sut.Add(10);
+            sut.Divide(2);
+            Assert.Equal(5, sut.CurrentValue);
         }
     }
 }

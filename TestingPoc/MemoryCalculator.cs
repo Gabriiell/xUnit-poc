@@ -18,6 +18,11 @@ namespace TestingPoc
             CurrentValue /= by;
         }
 
+        public void Clear()
+        {
+            CurrentValue = 0;
+        }
+
         public void Dispose()
         {
             //throw new NotImplementedException();
